@@ -18,3 +18,7 @@ stages:
       size: 93599
   always_run:
     cmd: python test.py
+    deps:
+    - path: test.py
+      md5: e3b6f9c42c1098b296ad15a29c8f62eb
+      size: 22
