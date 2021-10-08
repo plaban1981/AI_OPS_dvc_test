@@ -12,5 +12,8 @@ artifacts:
   model_dir: model_dir
   model_filename: ElasticNet.model
 
+  hyperparam_dir: hyperparams_dir
+  hyperparam_filename: best_parameters.json
+
   reports_dir: reports_dir
   scores: scores.json 

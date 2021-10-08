@@ -4,8 +4,8 @@ stages:
     cmd: python src/stage_01_load_save.py --config=config/config.yaml
     deps:
     - path: config/config.yaml
-      md5: 9eaf5ee2b48ae556996120c5d41882b3
-      size: 395
+      md5: 9293dca67718384b14159ea6491043be
+      size: 477
     - path: src/stage_01_load_save.py
       md5: e67702c6caca63305556cf60b5a4acd9
       size: 1058
@@ -23,8 +23,8 @@ stages:
       md5: 7d814a1bda02145efe703f4e1c01847a
       size: 93599
     - path: config/config.yaml
-      md5: 9eaf5ee2b48ae556996120c5d41882b3
-      size: 395
+      md5: 9293dca67718384b14159ea6491043be
+      size: 477
     - path: src/stage_02_split_data.py
       md5: 8cfbb84f812117b96739af46305463da
       size: 1716
@@ -42,6 +42,53 @@ stages:
     - path: artifacts/split_data_dir/train.csv
       md5: 5e5a3523f0fba3925dc577c3baf2c5cd
       size: 65577
+  tune:
+    cmd: python src/stage_04_tune.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/raw_local_dir/data.csv
+      md5: 7d814a1bda02145efe703f4e1c01847a
+      size: 93599
+    - path: artifacts/split_data_dir/train.csv
+      md5: 5e5a3523f0fba3925dc577c3baf2c5cd
+      size: 65577
+    - path: config/config.yaml
+      md5: 9293dca67718384b14159ea6491043be
+      size: 477
+    - path: src/stage_03_train.py
+      md5: aac30ff0f9a72074b062c612b9fb4102
+      size: 1629
+    - path: src/stage_04_tune.py
+      md5: 63a02ad79a3bd1dc9aefbc7054438758
+      size: 1911
+    - path: src/utils/all_utils.py
+      md5: 7bb14e1ec2c9dc15c33724da8ddd1a82
+      size: 716
+    params:
+      params.yaml:
+        base.random_state: 42
+        hyper_params.ElasticNet.alpha:
+        - 0.0001
+        - 0.001
+        - 0.01
+        - 0.1
+        - 1
+        - 10
+        - 100
+        hyper_params.ElasticNet.l1_ratio:
+        - 0.0
+        - 0.1
+        - 0.2
+        - 0.3
+        - 0.4
+        - 0.5
+        - 0.6
+        - 0.7
+        - 0.8
+        - 0.9
+    outs:
+    - path: artifacts/hyperparams_dir/best_parameters.json
+      md5: 1be6e7ebb79d9193d7e2a7d9f2036b61
+      size: 49
   train:
     cmd: python src/stage_03_train.py --config=config/config.yaml --params=params.yaml
     deps:
@@ -49,8 +96,8 @@ stages:
       md5: 5e5a3523f0fba3925dc577c3baf2c5cd
       size: 65577
     - path: config/config.yaml
-      md5: 9eaf5ee2b48ae556996120c5d41882b3
-      size: 395
+      md5: 9293dca67718384b14159ea6491043be
+      size: 477
     - path: src/stage_03_train.py
       md5: aac30ff0f9a72074b062c612b9fb4102
       size: 1629
@@ -76,8 +123,8 @@ stages:
       md5: 3a3eef9f920deae72cb9bcd7b91231f1
       size: 28169
     - path: config/config.yaml
-      md5: 9eaf5ee2b48ae556996120c5d41882b3
-      size: 395
+      md5: 9293dca67718384b14159ea6491043be
+      size: 477
     - path: src/stage_05_evaluate.py
       md5: c8e1e7a11e15c692e18f30bf2dd8fb8e
       size: 2128

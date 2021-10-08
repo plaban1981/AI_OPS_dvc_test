@@ -35,6 +35,21 @@ stages:
       - model_params.ElasticNet.l1_ratio
     outs:
       - artifacts/model_dir/ElasticNet.model
+  tune:
+    cmd: python src/stage_04_tune.py --config=config/config.yaml --params=params.yaml
+    deps:
+      - src/stage_03_train.py
+      - src/stage_04_tune.py      
+      - src/utils/all_utils.py
+      - config/config.yaml
+      - artifacts/raw_local_dir/data.csv
+      - artifacts/split_data_dir/train.csv
+    params:
+      - base.random_state
+      - hyper_params.ElasticNet.alpha
+      - hyper_params.ElasticNet.l1_ratio
+    outs:
+      - artifacts/hyperparams_dir/best_parameters.json
   evaluate:
     cmd: python src/stage_05_evaluate.py --config=config/config.yaml --params=params.yaml
     deps:
